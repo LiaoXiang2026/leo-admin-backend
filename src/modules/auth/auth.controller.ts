@@ -9,10 +9,11 @@ import {
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
+import { LoginResponse, RefreshResponse } from './dto/auth-response.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @ApiTags('认证模块')
@@ -22,6 +23,7 @@ export class AuthController {
 
   @ApiBearerAuth()
   @ApiOperation({ summary: '获取用户权限码' })
+  @ApiOkResponse({ type: [String] })
   @Get('codes')
   @UseGuards(JwtAuthGuard)
   async getCodes(@Req() req: Request & { user: { userId: string } }) {
@@ -29,6 +31,7 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: '登录' })
+  @ApiCreatedResponse({ type: LoginResponse })
   @Post('login')
   async login(@Body() dto: LoginDto) {
     const user = await this.authService.validateUser(
@@ -44,12 +47,14 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: '退出登录' })
+  @ApiOkResponse()
   @Post('logout')
   async logout() {
     return null;
   }
 
   @ApiOperation({ summary: '刷新 AccessToken' })
+  @ApiCreatedResponse({ type: RefreshResponse })
   @Post('refresh')
   async refresh(@Req() req: Request) {
     const refreshToken =

@@ -1,8 +1,9 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { MenuService } from './menu.service';
+import { MenuItemEntity } from './dto/menu-entities.dto';
 
 @ApiBearerAuth()
 @ApiTags('菜单模块')
@@ -12,6 +13,7 @@ export class MenuController {
   constructor(private readonly menuService: MenuService) {}
 
   @ApiOperation({ summary: '获取用户所有菜单' })
+  @ApiOkResponse({ type: [MenuItemEntity] })
   @Get('all')
   async getAllMenus() {
     return this.menuService.findAll();

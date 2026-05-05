@@ -11,7 +11,7 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 WORKDIR /app
 
 # 先拷贝依赖描述文件（利用 Docker 缓存，依赖没变就不重新安装）
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml .npmrc ./
 # 安装所有依赖（--frozen-lockfile 确保版本和 lockfile 完全一致）
 RUN pnpm install --frozen-lockfile
 
@@ -41,7 +41,7 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 WORKDIR /app
 
 # 拷贝依赖描述文件
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml .npmrc ./
 # 只安装生产依赖（--prod 跳过开发依赖，如 TypeScript、测试工具等）
 RUN pnpm install --frozen-lockfile --prod
 

@@ -1,0 +1,5 @@
+{
+  "build_command": "npx prisma generate && npx nest build",
+  "start_command": "node dist/main.js",
+  "install_command": "npm install"
+}

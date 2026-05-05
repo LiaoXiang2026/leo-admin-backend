@@ -4,6 +4,9 @@
 # 使用 Node.js 22 精简镜像作为基础，命名为 builder
 FROM node:22-slim AS builder
 
+# 安装 OpenSSL（Prisma 运行时需要）
+RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
+
 # 启用 corepack 并安装 pnpm（Node.js 自带的包管理器）
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
@@ -33,6 +36,9 @@ RUN pnpm nest build
 # ============================================
 # 重新用一个干净的 Node.js 镜像，不包含编译工具，体积更小
 FROM node:22-slim
+
+# 安装 OpenSSL（Prisma 运行时需要）
+RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 
 # 启用 pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate

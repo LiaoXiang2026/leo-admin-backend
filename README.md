@@ -47,3 +47,9 @@ pnpm db:migrate
 # 数据库管理界面
 pnpm db:studio
 ```
+
+## Swagger 集成
+
+项目已集成 Swagger API 文档，启动后访问 `/api/docs` 查看。
+
+![Swagger截图](./docs/images/swagger1.jpg)

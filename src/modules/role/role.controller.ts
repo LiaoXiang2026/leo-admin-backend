@@ -5,6 +5,7 @@ import {
   Delete,
   Body,
   Param,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -12,6 +13,8 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RoleService } from './role.service';
 import { CreateRoleDto, UpdateRoleDto } from './dto/role.dto';
 import { RoleEntity } from './dto/role-entities.dto';
+import { PageDto } from '../../common/dto/page.dto';
+import { RolePageResultDto } from './dto/role-page-result.dto';
 
 @ApiBearerAuth()
 @ApiTags('角色模块')
@@ -21,10 +24,10 @@ export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 
   @ApiOperation({ summary: '获取角色列表' })
-  @ApiOkResponse({ type: [RoleEntity] })
+  @ApiOkResponse({ type: RolePageResultDto })
   @Get()
-  async list() {
-    return this.roleService.findAll();
+  async list(@Query() query: PageDto) {
+    return this.roleService.findAll(query);
   }
 
   @ApiOperation({ summary: '获取角色详情' })

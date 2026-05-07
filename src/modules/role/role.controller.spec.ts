@@ -9,7 +9,7 @@ describe('RoleController', () => {
   const mockRole = { id: 'role-1', name: 'admin', permissions: [] };
 
   const mockRoleService = {
-    findAll: jest.fn().mockResolvedValue([mockRole]),
+    findAll: jest.fn().mockResolvedValue({ items: [mockRole], total: 1 }),
     findById: jest.fn().mockResolvedValue(mockRole),
     create: jest.fn().mockResolvedValue(mockRole),
     update: jest.fn().mockResolvedValue(mockRole),
@@ -31,10 +31,10 @@ describe('RoleController', () => {
   });
 
   describe('list', () => {
-    it('should return all roles', async () => {
-      const result = await controller.list();
-      expect(result).toEqual([mockRole]);
-      expect(service.findAll).toHaveBeenCalled();
+    it('should return paginated roles', async () => {
+      const result = await controller.list({ page: 1, pageSize: 10 });
+      expect(result).toEqual({ items: [mockRole], total: 1 });
+      expect(service.findAll).toHaveBeenCalledWith({ page: 1, pageSize: 10 });
     });
   });
 

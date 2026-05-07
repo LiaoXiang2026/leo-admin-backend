@@ -1,13 +1,18 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateRoleDto, UpdateRoleDto } from './dto/role.dto';
+import { PageDto } from '../../common/dto/page.dto';
+import { paginate } from '../../common/utils/paginate';
+import { PaginatedResult } from '../../common/dto/paginated-result.dto';
 
 @Injectable()
 export class RoleService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll() {
-    return this.prisma.role.findMany({
+  async findAll(query: PageDto): Promise<PaginatedResult<any>> {
+    return paginate(this.prisma, 'role', {
+      page: query.page ?? 1,
+      pageSize: query.pageSize ?? 10,
       include: { permissions: true },
     });
   }

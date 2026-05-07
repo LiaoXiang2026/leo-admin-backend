@@ -19,6 +19,7 @@ describe('RoleService', () => {
   const mockPrisma = {
     role: {
       findMany: jest.fn().mockResolvedValue([mockRole]),
+      count: jest.fn().mockResolvedValue(1),
       findUnique: jest.fn().mockResolvedValue(mockRole),
       create: jest.fn().mockResolvedValue(mockRole),
       update: jest.fn().mockResolvedValue(mockRole),
@@ -43,12 +44,13 @@ describe('RoleService', () => {
   });
 
   describe('findAll', () => {
-    it('should return all roles with permissions', async () => {
-      const result = await service.findAll();
-      expect(result).toEqual([mockRole]);
-      expect(prisma.role.findMany).toHaveBeenCalledWith({
-        include: { permissions: true },
-      });
+    it('should return paginated roles', async () => {
+      const result = await service.findAll({ page: 1, pageSize: 10 });
+      expect(result).toEqual({ items: [mockRole], total: 1 });
+      expect(prisma.role.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({ skip: 0, take: 10 }),
+      );
+      expect(prisma.role.count).toHaveBeenCalled();
     });
   });
 

@@ -112,10 +112,9 @@ export class UpdateDictDataDto {
 }
 
 export class DictDataQueryDto extends PageDto {
-  @ApiPropertyOptional({ description: '所属字典类型编码' })
-  @IsOptional()
+  @ApiProperty({ description: '所属字典类型编码' })
   @IsString()
-  typeCode?: string;
+  typeCode: string;
 
   @ApiPropertyOptional({ description: '标签名（模糊匹配）' })
   @IsOptional()
@@ -124,7 +123,7 @@ export class DictDataQueryDto extends PageDto {
 }
 
 export class BatchDeleteDictDataDto {
-  @ApiProperty({ description: '要删除的数据ID数组', type: [Number] })
+  @ApiProperty({ description: '要删除的数据ID数组', isArray: true, type: Number })
   @IsInt({ each: true })
   ids: number[];
 }

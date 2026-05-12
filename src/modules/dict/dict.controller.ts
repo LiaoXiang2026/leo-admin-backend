@@ -2,8 +2,6 @@ import {
   Controller,
   Get,
   Post,
-  Put,
-  Delete,
   Body,
   Param,
   Query,
@@ -55,14 +53,14 @@ export class DictController {
 
   @ApiOperation({ summary: '更新字典类型' })
   @ApiOkResponse({ type: DictTypeEntity })
-  @Put('type/:id')
+  @Post('type/:id')
   async updateType(@Param('id') id: string, @Body() dto: UpdateDictTypeDto) {
     return this.dictService.updateType(+id, dto);
   }
 
   @ApiOperation({ summary: '删除字典类型' })
   @ApiOkResponse({ description: 'true' })
-  @Delete('type/:id')
+  @Post('type/delete/:id')
   async deleteType(@Param('id') id: string) {
     return this.dictService.deleteType(+id);
   }
@@ -85,21 +83,21 @@ export class DictController {
 
   @ApiOperation({ summary: '更新字典数据' })
   @ApiOkResponse({ type: DictDataEntity })
-  @Put('data/:id')
+  @Post('data/:id')
   async updateData(@Param('id') id: string, @Body() dto: UpdateDictDataDto) {
     return this.dictService.updateData(+id, dto);
   }
 
   @ApiOperation({ summary: '删除单条字典数据' })
   @ApiOkResponse({ description: 'true' })
-  @Delete('data/:id')
+  @Post('data/delete/:id')
   async deleteData(@Param('id') id: string) {
     return this.dictService.deleteData(+id);
   }
 
   @ApiOperation({ summary: '批量删除字典数据' })
   @ApiOkResponse({ description: 'true' })
-  @Delete('data/batch')
+  @Post('data/batchDelete')
   async batchDeleteData(@Body() dto: BatchDeleteDictDataDto) {
     return this.dictService.batchDeleteData(dto);
   }

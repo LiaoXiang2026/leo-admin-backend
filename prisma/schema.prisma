@@ -90,3 +90,29 @@ model Menu {
 
   @@map("menus")
 }
+
+model DictType {
+  id        Int      @id @default(autoincrement())
+  code      String   @unique
+  name      String
+  remark    String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("dict_types")
+}
+
+model DictData {
+  id        Int      @id @default(autoincrement())
+  typeCode  String   @map("type_code")
+  label     String
+  value     String
+  sort      Int      @default(0)
+  status    Int      @default(1)
+  remark    String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([typeCode])
+  @@map("dict_data")
+}

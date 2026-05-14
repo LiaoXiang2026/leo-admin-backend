@@ -26,35 +26,35 @@ export class RoleController {
   @ApiOperation({ summary: '获取角色列表' })
   @ApiOkResponse({ type: RolePageResultDto })
   @Get()
-  async list(@Query() query: PageDto) {
+  async list(@Query() query: PageDto): Promise<RolePageResultDto> {
     return this.roleService.findAll(query);
   }
 
   @ApiOperation({ summary: '获取角色详情' })
   @ApiOkResponse({ type: RoleEntity })
   @Get(':id')
-  async detail(@Param('id') id: string) {
-    return this.roleService.findById(id);
+  async detail(@Param('id') id: string): Promise<RoleEntity> {
+    return this.roleService.findById(id) as unknown as RoleEntity;
   }
 
   @ApiOperation({ summary: '创建角色' })
   @ApiCreatedResponse({ type: RoleEntity })
   @Post()
-  async create(@Body() dto: CreateRoleDto) {
-    return this.roleService.create(dto);
+  async create(@Body() dto: CreateRoleDto): Promise<RoleEntity> {
+    return this.roleService.create(dto) as unknown as RoleEntity;
   }
 
   @ApiOperation({ summary: '更新角色' })
   @ApiOkResponse({ type: RoleEntity })
   @Post(':id')
-  async update(@Param('id') id: string, @Body() dto: UpdateRoleDto) {
-    return this.roleService.update(id, dto);
+  async update(@Param('id') id: string, @Body() dto: UpdateRoleDto): Promise<RoleEntity> {
+    return this.roleService.update(id, dto) as unknown as RoleEntity;
   }
 
   @ApiOperation({ summary: '删除角色' })
   @ApiOkResponse()
   @Delete(':id')
-  async delete(@Param('id') id: string) {
+  async delete(@Param('id') id: string): Promise<void> {
     return this.roleService.delete(id);
   }
 }

@@ -15,7 +15,7 @@ export class UserController {
   @ApiOperation({ summary: '获取当前用户信息' })
   @ApiOkResponse({ type: UserEntity })
   @Get('info')
-  async getUserInfo(@Req() req: Request & { user: { userId: string } }) {
-    return this.userService.findById(req.user.userId);
+  async getUserInfo(@Req() req: Request & { user: { userId: string } }): Promise<UserEntity> {
+    return (await this.userService.findById(req.user.userId)) as unknown as UserEntity;
   }
 }

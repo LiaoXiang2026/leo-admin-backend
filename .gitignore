@@ -6,3 +6,4 @@ logs
 coverage
 .deploy-tmp
 .worktrees
+src/metadata.ts

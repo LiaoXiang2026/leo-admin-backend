@@ -15,7 +15,7 @@ export class MenuController {
   @ApiOperation({ summary: '获取用户所有菜单' })
   @ApiOkResponse({ type: [MenuItemEntity] })
   @Get('all')
-  async getAllMenus() {
+  async getAllMenus(): Promise<MenuItemEntity[]> {
     return this.menuService.findAll();
   }
 }

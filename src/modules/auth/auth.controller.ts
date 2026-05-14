@@ -23,17 +23,17 @@ export class AuthController {
 
   @ApiBearerAuth()
   @ApiOperation({ summary: '获取用户权限码' })
-  @ApiOkResponse({ type: [String] })
+  @ApiOkResponse({ description: '权限码列表', schema: { type: 'array', items: { type: 'string' } } })
   @Get('codes')
   @UseGuards(JwtAuthGuard)
-  async getCodes(@Req() req: Request & { user: { userId: string } }) {
+  async getCodes(@Req() req: Request & { user: { userId: string } }): Promise<string[]> {
     return this.authService.getAccessCodes(req.user.userId);
   }
 
   @ApiOperation({ summary: '登录' })
   @ApiCreatedResponse({ type: LoginResponse })
   @Post('login')
-  async login(@Body() dto: LoginDto) {
+  async login(@Body() dto: LoginDto): Promise<LoginResponse> {
     const user = await this.authService.validateUser(
       dto.username,
       dto.password,
@@ -43,20 +43,20 @@ export class AuthController {
       accessToken: tokens.accessToken,
       refreshToken: tokens.refreshToken,
       ...user,
-    };
+    } as unknown as LoginResponse;
   }
 
   @ApiOperation({ summary: '退出登录' })
   @ApiOkResponse()
   @Post('logout')
-  async logout() {
+  async logout(): Promise<null> {
     return null;
   }
 
   @ApiOperation({ summary: '刷新 AccessToken' })
   @ApiCreatedResponse({ type: RefreshResponse })
   @Post('refresh')
-  async refresh(@Req() req: Request) {
+  async refresh(@Req() req: Request): Promise<RefreshResponse> {
     const refreshToken =
       (req.body as any)?.refreshToken || req.cookies?.refreshToken || '';
     if (!refreshToken) {

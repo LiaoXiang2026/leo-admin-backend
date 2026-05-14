@@ -13,8 +13,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // IP / 域名白名单（全局最先执行）
-  const ipWhitelist = new IpWhitelistMiddleware();
-  app.use(ipWhitelist.use.bind(ipWhitelist));
+  // const ipWhitelist = new IpWhitelistMiddleware();
+  // app.use(ipWhitelist.use.bind(ipWhitelist));
 
   // 全局前缀
   app.setGlobalPrefix('api');

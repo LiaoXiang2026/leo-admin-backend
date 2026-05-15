@@ -36,6 +36,11 @@ export class LoginResponse {
   roles?: RoleEntity[];
 }
 
+export class CodesResponse {
+  @ApiProperty({ type: [String], description: '权限码列表' })
+  codes: string[];
+}
+
 export class RefreshResponse {
   @ApiProperty({ description: '新的访问令牌' })
   data: string;

@@ -13,7 +13,7 @@ import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swa
 
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
-import { LoginResponse, RefreshResponse } from './dto/auth-response.dto';
+import { CodesResponse, LoginResponse, RefreshResponse } from './dto/auth-response.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @ApiTags('认证模块')
@@ -23,11 +23,11 @@ export class AuthController {
 
   @ApiBearerAuth()
   @ApiOperation({ summary: '获取用户权限码' })
-  @ApiOkResponse({ type: [String], description: '权限码列表' })
   @Get('codes')
   @UseGuards(JwtAuthGuard)
-  async getCodes(@Req() req: Request & { user: { userId: string } }): Promise<string[]> {
-    return this.authService.getAccessCodes(req.user.userId);
+  async getCodes(@Req() req: Request & { user: { userId: string } }): Promise<CodesResponse> {
+    const codes = await this.authService.getAccessCodes(req.user.userId);
+    return { codes };
   }
 
   @ApiOperation({ summary: '登录' })

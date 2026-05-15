@@ -6,7 +6,6 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
-import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { IpWhitelistMiddleware } from './common/middleware/ip-whitelist.middleware';
 
 async function bootstrap() {
@@ -35,9 +34,6 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
-
-  // 全局拦截器 - 统一响应格式
-  app.useGlobalInterceptors(new TransformInterceptor());
 
   // 全局异常过滤器
   app.useGlobalFilters(new HttpExceptionFilter());

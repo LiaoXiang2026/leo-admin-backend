@@ -13,6 +13,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RoleService } from './role.service';
 import { CreateRoleDto, UpdateRoleDto, RoleEntity, RolePageResultDto } from './dto/role.dto';
 import { PageDto } from '../../common/dto/page.dto';
+import { SkipTransform } from '../../common/decorators/skip-transform.decorator';
 
 @ApiBearerAuth()
 @ApiTags('角色模块')
@@ -23,6 +24,7 @@ export class RoleController {
 
   @ApiOperation({ summary: '获取角色列表' })
   @ApiOkResponse({ type: RolePageResultDto })
+  @SkipTransform()
   @Get()
   async list(@Query() query: PageDto): Promise<RolePageResultDto> {
     return this.roleService.findAll(query);

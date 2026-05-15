@@ -10,6 +10,7 @@ import {
 import { ApiBearerAuth, ApiOkResponse, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { DictService } from './dict.service';
+import { SkipTransform } from '../../common/decorators/skip-transform.decorator';
 import {
   CreateDictTypeDto,
   UpdateDictTypeDto,
@@ -35,6 +36,7 @@ export class DictController {
 
   @ApiOperation({ summary: '分页查询字典类型' })
   @ApiOkResponse({ type: DictTypePageResultDto })
+  @SkipTransform()
   @Get('type/list')
   async listType(@Query() query: DictTypeQueryDto): Promise<DictTypePageResultDto> {
     return this.dictService.findAllType(query);
@@ -65,6 +67,7 @@ export class DictController {
 
   @ApiOperation({ summary: '分页查询字典数据' })
   @ApiOkResponse({ type: DictDataPageResultDto })
+  @SkipTransform()
   @Get('data/list')
   async listData(@Query() query: DictDataQueryDto): Promise<DictDataPageResultDto> {
     return this.dictService.findAllData(query);

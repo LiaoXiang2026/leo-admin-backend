@@ -11,10 +11,8 @@ import {
 import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RoleService } from './role.service';
-import { CreateRoleDto, UpdateRoleDto } from './dto/role.dto';
-import { RoleEntity } from './dto/role-entities.dto';
+import { CreateRoleDto, UpdateRoleDto, RoleEntity, RolePageResultDto } from './dto/role.dto';
 import { PageDto } from '../../common/dto/page.dto';
-import { RolePageResultDto } from './dto/role-page-result.dto';
 
 @ApiBearerAuth()
 @ApiTags('角色模块')

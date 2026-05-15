@@ -12,8 +12,7 @@ import {
 import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { AuthService } from './auth.service';
-import { LoginDto } from './dto/login.dto';
-import { CodesResponse, LoginResponse, RefreshResponse } from './dto/auth-response.dto';
+import { LoginDto, CodesResponse, LoginResponse, RefreshResponse } from './dto/auth.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @ApiTags('认证模块')

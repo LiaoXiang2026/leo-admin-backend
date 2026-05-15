@@ -3,7 +3,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { PageDto } from '../../../common/dto/page.dto';
 
-// --- DictType DTOs ---
+// --- DictType Request DTOs ---
 
 export class CreateDictTypeDto {
   @ApiProperty({ description: '类型编码' })
@@ -49,7 +49,7 @@ export class DictTypeQueryDto extends PageDto {
   name?: string;
 }
 
-// --- DictData DTOs ---
+// --- DictData Request DTOs ---
 
 export class CreateDictDataDto {
   @ApiProperty({ description: '所属类型编码' })
@@ -126,4 +126,67 @@ export class BatchDeleteDictDataDto {
   @ApiProperty({ description: '要删除的数据ID数组', isArray: true, type: Number })
   @IsInt({ each: true })
   ids: number[];
+}
+
+// --- DictType Response DTOs ---
+
+export class DictTypeEntity {
+  @ApiProperty({ description: '字典类型ID' })
+  id: number;
+
+  @ApiProperty({ description: '类型编码' })
+  code: string;
+
+  @ApiProperty({ description: '类型名称' })
+  name: string;
+
+  @ApiProperty({ description: '备注', required: false })
+  remark?: string;
+
+  @ApiProperty({ description: '创建时间' })
+  createdAt: Date;
+}
+
+export class DictDataEntity {
+  @ApiProperty({ description: '字典数据ID' })
+  id: number;
+
+  @ApiProperty({ description: '所属类型编码' })
+  typeCode: string;
+
+  @ApiProperty({ description: '标签名' })
+  label: string;
+
+  @ApiProperty({ description: '字典值' })
+  value: string;
+
+  @ApiProperty({ description: '排序', required: false })
+  sort?: number;
+
+  @ApiProperty({ description: '状态：1启用，0禁用', required: false })
+  status?: number;
+
+  @ApiProperty({ description: '备注', required: false })
+  remark?: string;
+
+  @ApiProperty({ description: '创建时间' })
+  createdAt: Date;
+}
+
+// --- Page Result DTOs ---
+
+export class DictTypePageResultDto {
+  @ApiProperty({ type: [DictTypeEntity], description: '字典类型列表' })
+  items: DictTypeEntity[];
+
+  @ApiProperty({ description: '总数' })
+  total: number;
+}
+
+export class DictDataPageResultDto {
+  @ApiProperty({ type: [DictDataEntity], description: '字典数据列表' })
+  items: DictDataEntity[];
+
+  @ApiProperty({ description: '总数' })
+  total: number;
 }

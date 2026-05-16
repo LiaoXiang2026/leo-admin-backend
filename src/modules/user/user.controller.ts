@@ -3,7 +3,7 @@ import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swa
 
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UserService } from './user.service';
-import { UserEntity } from './dto/user-entities.dto';
+import { UserEntity } from './dto/user.dto';
 
 @ApiBearerAuth()
 @ApiTags('用户模块')

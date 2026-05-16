@@ -21,7 +21,6 @@ model User {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   roles    Role[]
-  menus    Menu[]
   // 用户自定义的权限码（直接关联）
   permissions Permission[]
 
@@ -51,44 +50,6 @@ model Permission {
   users User[]
 
   @@map("permissions")
-}
-
-model Menu {
-  id        String   @id @default(uuid())
-  name      String
-  path      String
-  component String
-  parentId  String?  @map("parent_id")
-  order     Int      @default(0)
-
-  // Meta 字段平铺
-  title           String?
-  icon            String?
-  hideInMenu      Boolean @default(false) @map("hide_in_menu")
-  hideInTab       Boolean @default(false) @map("hide_in_tab")
-  keepAlive       Boolean @default(false) @map("keep_alive")
-  affixTab        Boolean @default(false) @map("affix_tab")
-  badge           String?
-  badgeType       String? @map("badge_type")
-  activeIcon      String? @map("active_icon")
-  activePath      String? @map("active_path")
-  hideChildrenInMenu Boolean @default(false) @map("hide_children_in_menu")
-  hideInBreadcrumb   Boolean @default(false) @map("hide_in_breadcrumb")
-  iframeSrc          String? @map("iframe_src")
-  link               String?
-  openInNewWindow    Boolean @default(false) @map("open_in_new_window")
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  // 自关联
-  parent   Menu?  @relation("MenuChildren", fields: [parentId], references: [id])
-  children Menu[] @relation("MenuChildren")
-
-  // 关联用户（哪些用户可见此菜单）
-  users User[]
-
-  @@map("menus")
 }
 
 model DictType {

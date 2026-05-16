@@ -52,6 +52,26 @@ model Permission {
   @@map("permissions")
 }
 
+model OperateLog {
+  id          Int      @id @default(autoincrement())
+  operator    String
+  module      String
+  action      String
+  description String?
+  method      String
+  url         String
+  params      String?
+  duration    Int?
+  ip          String
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([module])
+  @@index([action])
+  @@index([operator])
+  @@index([createdAt])
+  @@map("operate_logs")
+}
+
 model DictType {
   id        Int      @id @default(autoincrement())
   code      String   @unique

@@ -41,7 +41,7 @@ export class OperateLogInterceptor implements NestInterceptor {
 
         this.prisma.operateLog.create({
           data: {
-            operator: (req.user as any)?.username ?? 'unknown',
+            operator: (req.user as any)?.username ?? (req.body as any)?.username ?? 'unknown',
             module,
             action,
             description: descriptionText,

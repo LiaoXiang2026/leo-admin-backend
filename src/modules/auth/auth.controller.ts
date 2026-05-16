@@ -14,6 +14,7 @@ import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags
 import { AuthService } from './auth.service';
 import { LoginDto, CodesResponse, LoginResponse, RefreshResponse } from './dto/auth.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { OperateLog } from '../../common/decorators/operate-log.decorator';
 
 @ApiTags('认证模块')
 @Controller('auth')
@@ -32,6 +33,7 @@ export class AuthController {
 
   @ApiOperation({ summary: '登录' })
   @ApiOkResponse({ type: LoginResponse })
+  @OperateLog({ module: '认证管理', action: 'LOGIN', description: '用户登录' })
   @Post('login')
   async login(@Body() dto: LoginDto): Promise<LoginResponse> {
     const user = await this.authService.validateUser(

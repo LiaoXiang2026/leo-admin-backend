@@ -18,6 +18,7 @@ import {
   OperateLogPageResultDto,
 } from './dto/operate-log.dto';
 import { SkipTransform } from '../../common/decorators/skip-transform.decorator';
+import { OperateLog } from '../../common/decorators/operate-log.decorator';
 
 @ApiBearerAuth()
 @ApiTags('操作日志')
@@ -43,6 +44,7 @@ export class OperateLogController {
 
   @ApiOperation({ summary: '删除操作日志' })
   @ApiOkResponse({ type: Boolean })
+  @OperateLog({ module: '操作日志', action: 'DELETE', description: '删除操作日志 {id}' })
   @Delete(':id')
   async delete(@Param('id') id: string): Promise<boolean> {
     return this.operateLogService.delete(+id);
@@ -50,6 +52,7 @@ export class OperateLogController {
 
   @ApiOperation({ summary: '批量删除操作日志' })
   @ApiOkResponse({ type: Boolean })
+  @OperateLog({ module: '操作日志', action: 'BATCH_DELETE', description: '批量删除操作日志' })
   @Post('batchDelete')
   async batchDelete(@Body() dto: BatchDeleteOperateLogDto): Promise<boolean> {
     return this.operateLogService.batchDelete(dto);

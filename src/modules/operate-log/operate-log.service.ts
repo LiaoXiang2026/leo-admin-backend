@@ -4,25 +4,9 @@ import { OperateLogQueryDto, BatchDeleteOperateLogDto } from './dto/operate-log.
 import { paginate } from '../../common/utils/paginate';
 import { PaginatedResult } from '../../common/dto/paginated-result.dto';
 
-export interface CreateOperateLogDto {
-  operator: string;
-  module: string;
-  action: string;
-  description?: string;
-  method: string;
-  url: string;
-  params?: string;
-  duration?: number;
-  ip: string;
-}
-
 @Injectable()
 export class OperateLogService {
   constructor(private readonly prisma: PrismaService) {}
-
-  async create(dto: CreateOperateLogDto) {
-    return this.prisma.operateLog.create({ data: dto });
-  }
 
   async findAll(query: OperateLogQueryDto): Promise<PaginatedResult<any>> {
     const { page, pageSize, operator, module, action } = query;

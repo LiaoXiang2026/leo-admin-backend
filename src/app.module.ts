@@ -12,6 +12,7 @@ import { RoleModule } from './modules/role/role.module';
 import { UserModule } from './modules/user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { OperateLogInterceptor } from './common/interceptors/operate-log.interceptor';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
   providers: [
     AppService,
     { provide: APP_INTERCEPTOR, useClass: TransformInterceptor },
+    { provide: APP_INTERCEPTOR, useClass: OperateLogInterceptor },
   ],
 })
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class

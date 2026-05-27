@@ -20,7 +20,7 @@ export class UserController {
   async list(@Req() req: Request & { user: { userId: string } }): Promise<UserPageResultDto> {
     const result = await this.userService.findAll({ page: 1, pageSize: 100 });
     return {
-      items: result.data,
+      items: result.items,
       total: result.total
     };
   }

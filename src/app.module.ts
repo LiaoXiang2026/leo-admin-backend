@@ -13,6 +13,7 @@ import { UserModule } from './modules/user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { OperateLogInterceptor } from './common/interceptors/operate-log.interceptor';
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { OperateLogInterceptor } from './common/interceptors/operate-log.interce
   controllers: [AppController],
   providers: [
     AppService,
+    { provide: APP_INTERCEPTOR, useClass: LoggingInterceptor },
     { provide: APP_INTERCEPTOR, useClass: TransformInterceptor },
     { provide: APP_INTERCEPTOR, useClass: OperateLogInterceptor },
   ],
